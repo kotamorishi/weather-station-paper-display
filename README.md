@@ -5,4 +5,5 @@ Raspberry Pi wether station with e-paper.
 https://www.waveshare.com/wiki/2.7inch_e-Paper_HAT
 
 # Fonts
-* tbd
+* Wether font (https://erikflowers.github.io/weather-icons/)
+
