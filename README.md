@@ -16,7 +16,7 @@ This repository included the code under MIT license.
 
 ## Fonts
 * Wether icon font (https://erikflowers.github.io/weather-icons/)
-* TBD
+* 04 Fonts (https://www.dafont.com/04.d4)
 
 # Example
 
