@@ -26,7 +26,7 @@ import math
 delay = 3
 refresh_interval = 600 # refresh every 600 seconds(10 minuites)
 
-# You can download fonts from following fonts could be 
+# You can download fonts from following fonts download links are in the README.md
 ttf = '/usr/share/fonts/RPGSystem.ttf'
 iconttf = '/usr/share/fonts/weathericons.ttf'
 
