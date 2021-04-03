@@ -43,7 +43,6 @@ hello8Font = ImageFont.truetype('/usr/share/fonts/04B_03.ttf', 8)
 font32 = ImageFont.truetype(ttf, 32)
 font24 = ImageFont.truetype(ttf, 24)
 font16 = ImageFont.truetype(ttf, 16)
-font10 = ImageFont.truetype('/usr/share/fonts/pixeldu.ttf', 10)
 
 iconFontSmall = ImageFont.truetype(iconttf, 24)
 iconFont = ImageFont.truetype(iconttf, 32)
