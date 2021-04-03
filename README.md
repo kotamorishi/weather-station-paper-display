@@ -10,6 +10,12 @@ https://www.waveshare.com/wiki/2.7inch_e-Paper_HAT
 
 # How to install
 
+## Download and prepare to use.
+```
+git clone https://github.com/kotamorishi/wether-station-paper-display
+```
+
+
 ## 1.Run the install script under the wether-station-paper-display
 
 ```
