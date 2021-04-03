@@ -1,5 +1,5 @@
 # weather-station-paper-display
-Raspberry Pi wether station with e-paper.
+Raspberry Pi weather station with e-paper.
 
 # Required hardware
 ## Raspberry Pi
@@ -10,7 +10,7 @@ https://www.waveshare.com/wiki/2.7inch_e-Paper_HAT
 
 # Required software
 
-Run the install script under the weather-station-paper-display
+Run the install script under the wether-station-paper-display
 
 ```
 install_epd_lib.sh
@@ -25,7 +25,7 @@ This repository included the code under MIT license.
 
 ## Fonts
 **Some fonts are hard coded in the script. please adjust the font path.**
-* Wether icon font (https://erikflowers.github.io/weather-icons/)
+* Weather icon font (https://erikflowers.github.io/weather-icons/)
 * 04 Fonts (https://www.dafont.com/04.d4)
 
 # Example
