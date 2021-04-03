@@ -9,6 +9,15 @@ https://www.raspberrypi.org/products/raspberry-pi-4-model-b/
 https://www.waveshare.com/wiki/2.7inch_e-Paper_HAT
 
 # Required software
+
+Run the install script under the weather-station-paper-display
+
+```
+install_epd_lib.sh
+```
+
+
+This script will download e-paper driver.
 ## e-Paper driver
 https://github.com/waveshare/e-Paper
 
