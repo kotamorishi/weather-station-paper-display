@@ -26,8 +26,7 @@ Download these fonts and place it. or just change the path in the script.
 /usr/share/fonts/
 ```
 * Weather icon font (https://erikflowers.github.io/weather-icons/)
-* 04 Fonts (https://www.dafont.com/04.d4)
-* https://www.dafont.com/04b-19.font
+* 04 Font (https://www.dafont.com/04b-03.font)
 
 
 # Example
