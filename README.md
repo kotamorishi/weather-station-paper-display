@@ -1,4 +1,4 @@
-# wether-station-paper-display
+# weather-station-paper-display
 Raspberry Pi wether station with e-paper.
 
 # Required hardware
@@ -31,3 +31,7 @@ This repository included the code under MIT license.
 # Example
 
 ![v1](https://github.com/kotamorishi/wether-station-paper-display/raw/main/example_images/v1.jpg)
+
+
+
+*weather
