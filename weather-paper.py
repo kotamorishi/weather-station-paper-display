@@ -4,7 +4,7 @@ import os
 #picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 picdir = 'pic'
 #libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
-libdir = 'lib'
+libdir = '/home/pi/weather-station/lib'
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
@@ -20,23 +20,30 @@ import json
 import os
 import sys
 import math
+from gpiozero import Button 
 
+# sudo -H pip install --upgrade luma.oled
+
+# 2.7 inch paper dispaly has 4 buttons, whiches are assinged GPIO 5, 6, 13, 19
+def handleBtnPress():
+    print("Hello, World! You can trigger whatever here.")
+btn = Button(5)
+btn.when_pressed = handleBtnPress
 
 # Settings - please update following.
 delay = 3
 refresh_interval = 600 # refresh every 600 seconds(10 minuites)
 
-# You can download fonts from following fonts download links are in the README.md
 ttf = '/usr/share/fonts/RPGSystem.ttf'
 iconttf = '/usr/share/fonts/weathericons.ttf'
 
-helloFont = ImageFont.truetype('/usr/share/fonts/04B_19__.ttf', 28)
+hello32Font = ImageFont.truetype('/usr/share/fonts/04B_03.ttf', 32)
+helloFont = ImageFont.truetype('/usr/share/fonts/04B_03.ttf', 16)
+hello8Font = ImageFont.truetype('/usr/share/fonts/04B_03.ttf', 8)
 font32 = ImageFont.truetype(ttf, 32)
 font24 = ImageFont.truetype(ttf, 24)
 font16 = ImageFont.truetype(ttf, 16)
-font10 = ImageFont.truetype('/usr/share/fonts/Pixeled.ttf', 10)
-font8 = ImageFont.truetype('/usr/share/fonts/pf7.ttf', 16)
-fontSmall = ImageFont.truetype('/usr/share/fonts/imposter.ttf', 8)
+font10 = ImageFont.truetype('/usr/share/fonts/pixeldu.ttf', 10)
 
 iconFontSmall = ImageFont.truetype(iconttf, 24)
 iconFont = ImageFont.truetype(iconttf, 32)
@@ -103,10 +110,17 @@ def main():
     
     PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(PaperImage)
-    draw.text((100, 70), 'Hello.', font=helloFont, fill = 0)
+    draw.text((40, 40), 'HELLO.', font=helloFont, fill = 0)
+    draw.text((40, 90), 'I AM WEATHER STATION.', font=helloFont, fill = 0)
+    #draw.text((10,130), u'', font=iconFont, fill=0)
+    draw.text((5, 165), 'V 1.0', font=hello8Font, fill = 0)
+    draw.text((110, 165), 'RETRIEVING WEATHER INFORMATION...', font=hello8Font, fill = 0)
+
     epd.display(epd.getbuffer(PaperImage))
     basedir = os.path.dirname(os.path.realpath(__file__))
     icondir = os.path.join(basedir, 'icons')
+
+    time.sleep(10)
 
     #epd.sleep() # better to do with this.
 
@@ -123,11 +137,14 @@ def main():
         # if current time is 2AM or later, dim the screen. I have no idea it will burn or not.
         now = datetime.now()
         #if((now.hour >= 2) and (now.hour < 8)):
-        if((now.hour >= 2) and (now.hour < 8)):
+        if((now.hour >= 2) and (now.hour < 7)):
             print("sleep monitor")
-            time.sleep(1)
             epd.Clear(0xFF)
+            epd.sleep() # better to do with this.
+            time.sleep(600)
             continue
+
+
 
         PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(PaperImage)
@@ -137,7 +154,7 @@ def main():
         if(elapsed_time >= refresh_interval):
             started_time = time.time()
             subprocess.check_output(os.path.join(basedir, 'download.sh'), shell=True)
-            time.sleep(3)
+            time.sleep(10)
 
         with open(os.path.join(basedir, 'current-data.json')) as conditions_data_file:
                 conditions_data = json.load(conditions_data_file)
@@ -166,33 +183,33 @@ def main():
         finfo.description = description
         forecasts.append(finfo)
 
-        draw.text((10, 0), now.strftime("%B %-d"), font =font32, fill = 0)
-        draw.text((210, 0), now.strftime("%a"), font =font32, fill = 0)
-
+        draw.text((5, 0), now.strftime("%B %-d"), font =font32, fill = 0)
+        draw.text((220, 0), now.strftime("%a"), font =font32, fill = 0)
+        # 04 font
+        #draw.text((10, 0), now.strftime("%B %-d").upper(), font =hello32Font, fill = 0)
+        #draw.text((210, 0), now.strftime("%a").upper(), font =hello32Font, fill = 0)
         
         # temp
-        #draw.text((5, 35), "CURRENT", font =fontSmall, fill = 0)
-        draw.text((10, 40), "%2.1fc" % temp_cur, font =font32, fill = 0)
-        #draw.text((90,40), u'', font=iconFont, fill=0)
-        draw.text((5, 75), "Feels like", font =fontSmall, fill = 0)
-        draw.text((10, 85), "%2.1fc" % temp_cur_feels, font =font32, fill = 0)
-        #draw.text((90,75), u'', font=iconFont, fill=0)
-        
+        draw.text((5, 35), "TEMPERATURE", font =hello8Font, fill = 0)
+        draw.text((10, 42), "%2.1fc" % temp_cur, font =font32, fill = 0)
+        draw.text((5, 75), "FEELS LIKE", font =hello8Font, fill = 0)
+        draw.text((10, 80), "%2.1fc" % temp_cur_feels, font =font32, fill = 0)
         
         # icon
-        draw.text((120, 0), iconMap[icon], font =iconFontLarge, fill = 0)
+        draw.text((140, 30), iconMap[icon], font =iconFontMid, fill = 0)
         
         # weather desc
-        # draw.text((160, 35), description, font =font10, fill = 0)
+        draw.text((110, 35), description.upper(), font =hello8Font, fill = 0)
 
-        draw.line((95, 45, 95, 100), fill = 0)
+        draw.line((95, 50, 95, 100), fill = 0)
         #draw.line((0, 125, 295, 125), fill = 0)
 
         # forecast draw : fi = forecast index (every 3 hours)
         for fi in range(4):
             finfo = forecastInfo()
             finfo.time_dt  = forecast_data[u'list'][fi][u'dt']
-            finfo.time     = time.strftime('%-I%p', time.localtime(finfo.time_dt))
+            finfo.time     = time.strftime('%-I', time.localtime(finfo.time_dt))
+            finfo.ampm     = time.strftime('%p', time.localtime(finfo.time_dt))
             #finfo.time     = time.strftime('%-I', time.localtime(finfo.time_dt))
             finfo.timePfx  = time.strftime('%p', time.localtime(finfo.time_dt))
             finfo.temp     = forecast_data[u'list'][fi][u'main'][u'temp']
@@ -205,19 +222,20 @@ def main():
             if(fi > 0):
                 draw.line(((fi * columnWidth), 145, (fi * columnWidth), 180), fill = 0)
 
-            draw.text((3 + (fi * columnWidth), 120), finfo.time, font =font8, fill = 0)
-            draw.text((20 + (fi * columnWidth), 160), ("%2.1f" % finfo.temp), font =font8, fill = 0)
+            draw.text((3 + (fi * columnWidth), 130), finfo.time, font =helloFont, fill = 0)
+            draw.text((8 + (fi * columnWidth), 145), finfo.ampm, font =hello8Font, fill = 0)
+            draw.text((20 + (fi * columnWidth), 160), ("%2.1f" % finfo.temp), font=helloFont , fill = 0)
             draw.text((25 + (fi * columnWidth), 125), iconMap[finfo.icon], font =iconFontSmall, fill = 0)
             #draw.text((5 + (fi * columnWidth), 110), str(finfo.temp), font =font8, fill = 0)
             #draw.text((5 + (fi * columnWidth), 140), str(finfo.humidity) + '%', font =font8, fill = 0)
         
 
+        #draw.text((160,8), "AS OF " + utime, font =hello8Font, fill = 0)
         epd.display(epd.getbuffer(PaperImage))
         epd.sleep() # better to do with this.
-        time.sleep(refresh_interval)
-
-
+        time.sleep(600)
+        
+   
 
 if __name__ == "__main__":
     main()
-
