@@ -16,17 +16,21 @@ Run the install script under the wether-station-paper-display
 install_epd_lib.sh
 ```
 
-
 This script will download e-paper driver.
-## e-Paper driver
 https://github.com/waveshare/e-Paper
 
-This repository included the code under MIT license.
 
 ## Fonts
+Download these fonts and place it. or just change the path in the script.
+```
+/usr/share/fonts/
+```
+
+
 **Some fonts are hard coded in the script. please adjust the font path.**
 * Weather icon font (https://erikflowers.github.io/weather-icons/)
 * 04 Fonts (https://www.dafont.com/04.d4)
+* https://www.dafont.com/04b-19.font
 
 # Example
 
