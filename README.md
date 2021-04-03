@@ -28,6 +28,14 @@ Download these fonts and place it. or just change the path in the script.
 * Weather icon font (https://erikflowers.github.io/weather-icons/)
 * 04 Font (https://www.dafont.com/04b-03.font)
 
+## 3. set up cron
+
+crontab -e
+
+```
+@reboot /home/pi/weather-station/wrapper.sh
+``` 
+
 
 # Example
 
