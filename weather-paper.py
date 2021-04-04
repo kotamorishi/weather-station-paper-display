@@ -20,7 +20,11 @@ import json
 import os
 import sys
 import math
-from gpiozero import Button 
+from gpiozero import Button
+
+# monitor sleep setting
+sleepStart = 2 # Sleep starts at 2AM
+sleepEnd = 7   # Sleep ends at 7AM
 
 # sudo -H pip install --upgrade luma.oled
 
@@ -135,8 +139,7 @@ def main():
 
         # if current time is 2AM or later, dim the screen. I have no idea it will burn or not.
         now = datetime.now()
-        #if((now.hour >= 2) and (now.hour < 8)):
-        if((now.hour >= 2) and (now.hour < 7)):
+        if((now.hour >= sleepStart) and (now.hour < sleepEnd)):
             print("sleep monitor")
             epd.Clear(0xFF)
             epd.sleep() # better to do with this.
