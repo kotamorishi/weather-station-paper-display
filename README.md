@@ -12,10 +12,18 @@ https://www.waveshare.com/wiki/2.7inch_e-Paper_HAT
 
 # How to install
 
-## Download and prepare to use.
+## 1.Enable SPI interface on your Raspberry Pi.
+```
+sudo raspi-config
+```
+- 3 Interface Options
+- P4 SPI (Enable it)
+
+## 2.Download and prepare to use.
 ```
 git clone https://github.com/kotamorishi/weather-station-paper-display
 ```
+
 
 
 ## 1.Run the install script under the weather-station-paper-display
