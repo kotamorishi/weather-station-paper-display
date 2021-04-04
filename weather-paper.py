@@ -104,140 +104,147 @@ def internet_on():
 
 
 def main():
+    
     print("Weather station started")
     now = datetime.now()
     epd = epd2in7.EPD()
     epd.init()
     epd.Clear(0xFF)
     time.sleep(1)
-    
-    PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-    draw = ImageDraw.Draw(PaperImage)
-    draw.text((40, 40), 'HELLO.', font=helloFont, fill = 0)
-    draw.text((40, 90), 'I AM WEATHER STATION.', font=helloFont, fill = 0)
-    #draw.text((10,130), u'', font=iconFont, fill=0)
-    draw.text((5, 165), 'V 1.0', font=hello8Font, fill = 0)
-    draw.text((110, 165), 'RETRIEVING WEATHER INFORMATION...', font=hello8Font, fill = 0)
-
-    epd.display(epd.getbuffer(PaperImage))
-    basedir = os.path.dirname(os.path.realpath(__file__))
-    icondir = os.path.join(basedir, 'icons')
-
-    time.sleep(10)
-
-    #epd.sleep() # better to do with this.
-
-    started_time = time.time() - refresh_interval
-
-    while True:
-        print("loop start")
-        elapsed_time = time.time() - started_time
-
-        #epd = epd2in7.EPD()
-        epd.init()
-        #epd.Clear(0xFF)
-
-        # if current time is 2AM or later, dim the screen. I have no idea it will burn or not.
-        now = datetime.now()
-        if((now.hour >= sleepStart) and (now.hour < sleepEnd)):
-            print("sleep monitor")
-            epd.Clear(0xFF)
-            epd.sleep() # better to do with this.
-            time.sleep(600)
-            continue
-
-
-
+    try:
         PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(PaperImage)
+        draw.text((40, 40), 'HELLO.', font=helloFont, fill = 0)
+        draw.text((40, 90), 'I AM WEATHER STATION.', font=helloFont, fill = 0)
+        #draw.text((10,130), u'', font=iconFont, fill=0)
+        draw.text((5, 165), 'V 1.0', font=hello8Font, fill = 0)
+        draw.text((110, 165), 'RETRIEVING WEATHER INFORMATION...', font=hello8Font, fill = 0)
+
+        epd.display(epd.getbuffer(PaperImage))
         basedir = os.path.dirname(os.path.realpath(__file__))
         icondir = os.path.join(basedir, 'icons')
 
-        if(elapsed_time >= refresh_interval):
-            started_time = time.time()
-            subprocess.check_output(os.path.join(basedir, 'download.sh'), shell=True)
-            time.sleep(10)
+        time.sleep(10)
 
-        with open(os.path.join(basedir, 'current-data.json')) as conditions_data_file:
-                conditions_data = json.load(conditions_data_file)
-            
-        with open(os.path.join(basedir, 'forecast-data.json')) as forecast_data_file:
-            forecast_data = json.load(forecast_data_file)
+        #epd.sleep() # better to do with this.
 
-        #city_name = conditions_data[u'name']
-        city_name = 'Toronto'
-        temp_cur = conditions_data[u'main'][u'temp']
-        temp_cur_feels = conditions_data[u'main'][u'feels_like']
-        icon = str(conditions_data[u'weather'][0][u'icon'])
-        description = conditions_data[u'weather'][0][u'description']
-        humidity = conditions_data[u'main'][u'humidity']
-        epoch = int(conditions_data[u'dt'])
-        utime = time.strftime('%H:%M', time.localtime(epoch))
+        started_time = time.time() - refresh_interval
 
-        forecasts = []
-        finfo = forecastInfo()
-        finfo.time     = "Now" #city_name
-        finfo.temp     = temp_cur
-        finfo.humidity = humidity
-        finfo.timePfx = ''
-        #finfo.bmp      = logo
-        finfo.icon     = icon
-        finfo.description = description
-        forecasts.append(finfo)
+        while True:
+            print("loop start")
+            elapsed_time = time.time() - started_time
 
-        draw.text((5, 0), now.strftime("%B %-d"), font =font32, fill = 0)
-        draw.text((220, 0), now.strftime("%a"), font =font32, fill = 0)
-        # 04 font
-        #draw.text((10, 0), now.strftime("%B %-d").upper(), font =hello32Font, fill = 0)
-        #draw.text((210, 0), now.strftime("%a").upper(), font =hello32Font, fill = 0)
-        
-        # temp
-        draw.text((5, 35), "TEMPERATURE", font =hello8Font, fill = 0)
-        draw.text((10, 42), "%2.1fc" % temp_cur, font =font32, fill = 0)
-        draw.text((5, 75), "FEELS LIKE", font =hello8Font, fill = 0)
-        draw.text((10, 80), "%2.1fc" % temp_cur_feels, font =font32, fill = 0)
-        
-        # icon
-        draw.text((140, 30), iconMap[icon], font =iconFontMid, fill = 0)
-        
-        # weather desc
-        draw.text((110, 35), description.upper(), font =hello8Font, fill = 0)
+            #epd = epd2in7.EPD()
+            epd.init()
+            #epd.Clear(0xFF)
 
-        draw.line((95, 50, 95, 100), fill = 0)
-        #draw.line((0, 125, 295, 125), fill = 0)
+            # if current time is 2AM or later, dim the screen. I have no idea it will burn or not.
+            now = datetime.now()
+            if((now.hour >= sleepStart) and (now.hour < sleepEnd)):
+                print("sleep monitor")
+                epd.Clear(0xFF)
+                epd.sleep() # better to do with this.
+                time.sleep(600)
+                continue
 
-        # forecast draw : fi = forecast index (every 3 hours)
-        for fi in range(4):
+            PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+            draw = ImageDraw.Draw(PaperImage)
+            basedir = os.path.dirname(os.path.realpath(__file__))
+            icondir = os.path.join(basedir, 'icons')
+
+            if(elapsed_time >= refresh_interval):
+                started_time = time.time()
+                subprocess.check_output(os.path.join(basedir, 'download.sh'), shell=True)
+                time.sleep(10)
+
+            with open(os.path.join(basedir, 'current-data.json')) as conditions_data_file:
+                    conditions_data = json.load(conditions_data_file)
+                
+            with open(os.path.join(basedir, 'forecast-data.json')) as forecast_data_file:
+                forecast_data = json.load(forecast_data_file)
+
+            #city_name = conditions_data[u'name']
+            city_name = 'Toronto'
+            temp_cur = conditions_data[u'main'][u'temp']
+            temp_cur_feels = conditions_data[u'main'][u'feels_like']
+            icon = str(conditions_data[u'weather'][0][u'icon'])
+            description = conditions_data[u'weather'][0][u'description']
+            humidity = conditions_data[u'main'][u'humidity']
+            epoch = int(conditions_data[u'dt'])
+            utime = time.strftime('%H:%M', time.localtime(epoch))
+
+            forecasts = []
             finfo = forecastInfo()
-            finfo.time_dt  = forecast_data[u'list'][fi][u'dt']
-            finfo.time     = time.strftime('%-I', time.localtime(finfo.time_dt))
-            finfo.ampm     = time.strftime('%p', time.localtime(finfo.time_dt))
-            #finfo.time     = time.strftime('%-I', time.localtime(finfo.time_dt))
-            finfo.timePfx  = time.strftime('%p', time.localtime(finfo.time_dt))
-            finfo.temp     = forecast_data[u'list'][fi][u'main'][u'temp']
-            finfo.humidity = forecast_data[u'list'][fi][u'main'][u'humidity']
-            finfo.icon     = forecast_data[u'list'][fi][u'weather'][0][u'icon'] # show the first wether condition...?
-            finfo.description = forecast_data[u'list'][fi][u'weather'][0][u'description'] # show the first wether condition...?
-            #finfo.bmp      = Image.open(os.path.join(icondir,  finfo.icon[0:2] + ".bmp"))
-            #forecasts.append(finfo)
-            columnWidth = 65
-            if(fi > 0):
-                draw.line(((fi * columnWidth), 145, (fi * columnWidth), 180), fill = 0)
+            finfo.time     = "Now" #city_name
+            finfo.temp     = temp_cur
+            finfo.humidity = humidity
+            finfo.timePfx = ''
+            #finfo.bmp      = logo
+            finfo.icon     = icon
+            finfo.description = description
+            forecasts.append(finfo)
 
-            draw.text((3 + (fi * columnWidth), 130), finfo.time, font =helloFont, fill = 0)
-            draw.text((8 + (fi * columnWidth), 145), finfo.ampm, font =hello8Font, fill = 0)
-            draw.text((20 + (fi * columnWidth), 160), ("%2.1f" % finfo.temp), font=helloFont , fill = 0)
-            draw.text((25 + (fi * columnWidth), 125), iconMap[finfo.icon], font =iconFontSmall, fill = 0)
-            #draw.text((5 + (fi * columnWidth), 110), str(finfo.temp), font =font8, fill = 0)
-            #draw.text((5 + (fi * columnWidth), 140), str(finfo.humidity) + '%', font =font8, fill = 0)
-        
+            draw.text((5, 0), now.strftime("%B %-d"), font =font32, fill = 0)
+            draw.text((210, 0), now.strftime("%a"), font =font32, fill = 0)
+            # 04 font
+            #draw.text((10, 0), now.strftime("%B %-d").upper(), font =hello32Font, fill = 0)
+            #draw.text((210, 0), now.strftime("%a").upper(), font =hello32Font, fill = 0)
+            
+            # temp
+            draw.text((5, 35), "TEMPERATURE", font =hello8Font, fill = 0)
+            draw.text((10, 42), "%2.1fc" % temp_cur, font =font32, fill = 0)
+            draw.text((5, 75), "FEELS LIKE", font =hello8Font, fill = 0)
+            draw.text((10, 80), "%2.1fc" % temp_cur_feels, font =font32, fill = 0)
+            
+            # icon
+            draw.text((140, 30), iconMap[icon], font =iconFontMid, fill = 0)
+            
+            # weather desc
+            draw.text((110, 35), description.upper(), font =hello8Font, fill = 0)
 
-        #draw.text((160,8), "AS OF " + utime, font =hello8Font, fill = 0)
+            draw.line((95, 50, 95, 100), fill = 0)
+            #draw.line((0, 125, 295, 125), fill = 0)
+
+            # forecast draw : fi = forecast index (every 3 hours)
+            for fi in range(4):
+                finfo = forecastInfo()
+                finfo.time_dt  = forecast_data[u'list'][fi][u'dt']
+                finfo.time     = time.strftime('%-I', time.localtime(finfo.time_dt))
+                finfo.ampm     = time.strftime('%p', time.localtime(finfo.time_dt))
+                #finfo.time     = time.strftime('%-I', time.localtime(finfo.time_dt))
+                finfo.timePfx  = time.strftime('%p', time.localtime(finfo.time_dt))
+                finfo.temp     = forecast_data[u'list'][fi][u'main'][u'temp']
+                finfo.humidity = forecast_data[u'list'][fi][u'main'][u'humidity']
+                finfo.icon     = forecast_data[u'list'][fi][u'weather'][0][u'icon'] # show the first wether condition...?
+                finfo.description = forecast_data[u'list'][fi][u'weather'][0][u'description'] # show the first wether condition...?
+                #finfo.bmp      = Image.open(os.path.join(icondir,  finfo.icon[0:2] + ".bmp"))
+                #forecasts.append(finfo)
+                columnWidth = 65
+                if(fi > 0):
+                    draw.line(((fi * columnWidth), 145, (fi * columnWidth), 180), fill = 0)
+
+                draw.text((3 + (fi * columnWidth), 130), finfo.time, font =helloFont, fill = 0)
+                draw.text((8 + (fi * columnWidth), 145), finfo.ampm, font =hello8Font, fill = 0)
+                draw.text((20 + (fi * columnWidth), 160), ("%2.1f" % finfo.temp), font=helloFont , fill = 0)
+                draw.text((25 + (fi * columnWidth), 125), iconMap[finfo.icon], font =iconFontSmall, fill = 0)
+                #draw.text((5 + (fi * columnWidth), 110), str(finfo.temp), font =font8, fill = 0)
+                #draw.text((5 + (fi * columnWidth), 140), str(finfo.humidity) + '%', font =font8, fill = 0)
+            
+
+            #draw.text((160,8), "AS OF " + utime, font =hello8Font, fill = 0)
+            epd.display(epd.getbuffer(PaperImage))
+            epd.sleep() # better to do with this.
+            time.sleep(600)
+    except:
+        PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+        draw = ImageDraw.Draw(PaperImage)
+        draw.text((10, 20), 'HMM... SOMETING WRONG.', font=helloFont, fill = 0)
+        draw.text((10, 50), '1.CHECK INTERNET CONNECTION.', font=helloFont, fill = 0)
+        draw.text((10, 75), '2.UPDATE DOWNLOAD.SH API KEY', font=helloFont, fill = 0)
+        draw.text((10, 100), '3.CHECK FONTS FILES.', font=helloFont, fill = 0)
+        draw.text((10, 130), 'IF ALL OKAY, ASK ME', font=helloFont, fill = 0)
+        draw.text((20, 150), 'TWITTER @kota_morishita', font=helloFont, fill = 0)
         epd.display(epd.getbuffer(PaperImage))
-        epd.sleep() # better to do with this.
-        time.sleep(600)
-        
-   
 
 if __name__ == "__main__":
     main()
