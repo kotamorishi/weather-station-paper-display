@@ -14,11 +14,11 @@ https://www.waveshare.com/wiki/2.7inch_e-Paper_HAT
 
 ## Download and prepare to use.
 ```
-git clone https://github.com/kotamorishi/wether-station-paper-display
+git clone https://github.com/kotamorishi/weather-station-paper-display
 ```
 
 
-## 1.Run the install script under the wether-station-paper-display
+## 1.Run the install script under the weather-station-paper-display
 
 ```
 install_epd_lib.sh
