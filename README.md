@@ -1,7 +1,7 @@
 # weather-station-paper-display
 Raspberry Pi weather station with e-paper.
 
-![v1](https://github.com/kotamorishi/wether-station-paper-display/raw/main/example_images/v1.jpg)
+![v1](https://github.com/kotamorishi/weather-station-paper-display/raw/main/example_images/v1.jpg)
 
 # Required hardware
 ## Raspberry Pi
@@ -59,5 +59,3 @@ crontab -e
 @reboot /home/pi/weather-station/wrapper.sh
 ``` 
 
-
-*weather
