@@ -26,7 +26,7 @@ git clone https://github.com/kotamorishi/weather-station-paper-display
 
 
 
-## 1.Run the install script under the weather-station-paper-display
+## 3.Run the install script under the weather-station-paper-display
 
 ```
 install_epd_lib.sh
@@ -36,7 +36,7 @@ This script will download e-paper driver.
 https://github.com/waveshare/e-Paper
 
 
-## 2. Download font files
+## 4. Download font files
 Download follwing fonts and place it. or just change the path in the script.
 ```
 /usr/share/fonts/
@@ -51,7 +51,7 @@ Unzip and place it.(required sudo permission)
 '/usr/share/fonts/weathericons.ttf'
 '/usr/share/fonts/04B_03.ttf'
 ```
-## 3.Update your API Key and weather ID
+## 5.Update your API Key and weather ID
 
 Sign up for OpenWeatherMap and generate key from here
 
@@ -66,11 +66,13 @@ WEATHER_ID=6167865
 
 Don't forget to update WEATHER_ID too. 
 
-## 4. set up cron
+## 6. set up cron
 
 crontab -e
 
 ```
 @reboot /home/pi/weather-station/wrapper.sh
 ``` 
+
+
 
