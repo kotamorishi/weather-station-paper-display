@@ -234,7 +234,7 @@ def main():
             #draw.text((160,8), "AS OF " + utime, font =hello8Font, fill = 0)
             epd.display(epd.getbuffer(PaperImage))
             epd.sleep() # better to do with this.
-            time.sleep(600)
+            time.sleep(refresh_interval)
     except:
         PaperImage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(PaperImage)
