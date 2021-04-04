@@ -29,13 +29,20 @@ https://github.com/waveshare/e-Paper
 
 
 ## 2. Download font files
-Download these fonts and place it. or just change the path in the script.
+Download follwing fonts and place it. or just change the path in the script.
 ```
 /usr/share/fonts/
 ```
 * Weather icon font (https://erikflowers.github.io/weather-icons/)
 * 04 Font (https://www.dafont.com/04b-03.font)
+* RPG system font (https://www.dafont.com/rpgsystem.font)
 
+Unzip and place it.(required sudo permission)
+```
+'/usr/share/fonts/RPGSystem.ttf'
+'/usr/share/fonts/weathericons.ttf'
+'/usr/share/fonts/04B_03.ttf'
+```
 ## 3.Update your API Key and weather ID
 
 Sign up for OpenWeatherMap and generate key from here
