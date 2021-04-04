@@ -1,6 +1,8 @@
 # weather-station-paper-display
 Raspberry Pi weather station with e-paper.
 
+![v1](https://github.com/kotamorishi/wether-station-paper-display/raw/main/example_images/v1.jpg)
+
 # Required hardware
 ## Raspberry Pi
 https://www.raspberrypi.org/products/raspberry-pi-4-model-b/
@@ -34,19 +36,28 @@ Download these fonts and place it. or just change the path in the script.
 * Weather icon font (https://erikflowers.github.io/weather-icons/)
 * 04 Font (https://www.dafont.com/04b-03.font)
 
-## 3. set up cron
+## 3.Update your API Key and weather ID
+
+Sign up for OpenWeatherMap and generate key from here
+
+https://home.openweathermap.org/api_keys
+
+
+Once you've got an API Key, copy and paste it in the download.sh
+```
+API_KEY="TYPE_YOUR_API_KEY_HERE"
+WEATHER_ID=6167865
+```
+
+Don't forget to update WEATHER_ID too. 
+
+## 4. set up cron
 
 crontab -e
 
 ```
 @reboot /home/pi/weather-station/wrapper.sh
 ``` 
-
-
-# Example
-
-![v1](https://github.com/kotamorishi/wether-station-paper-display/raw/main/example_images/v1.jpg)
-
 
 
 *weather
