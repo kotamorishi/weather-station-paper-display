@@ -4,7 +4,7 @@ import os
 #picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
 picdir = 'pic'
 #libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
-libdir = '/home/pi/wether-station-paper-display/lib'
+libdir = '/home/pi/weather-station-paper-display/lib'
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
