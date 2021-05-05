@@ -71,7 +71,7 @@ Don't forget to update WEATHER_ID too.
 crontab -e
 
 ```
-@reboot /home/pi/weather-station/wrapper.sh
+@reboot /home/pi/weather-station/wrapping-paper.sh
 ``` 
 
 
