@@ -13,5 +13,5 @@ WEATHER_ID=6091104
 
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-wget -O ${SCRIPTPATH}/current-data.json "http://api.openweathermap.org/data/2.5/weather?id=$WEATHER_ID&&units=metric&appid=$API_KEY"
-wget -O ${SCRIPTPATH}/forecast-data.json "http://api.openweathermap.org/data/2.5/forecast?id=$WEATHER_ID&units=metric&appid=$API_KEY"
+wget -O ${SCRIPTPATH}/current-data.json "https://api.openweathermap.org/data/2.5/weather?id=$WEATHER_ID&&units=metric&appid=$API_KEY"
+wget -O ${SCRIPTPATH}/forecast-data.json "https://api.openweathermap.org/data/2.5/forecast?id=$WEATHER_ID&units=metric&appid=$API_KEY"
